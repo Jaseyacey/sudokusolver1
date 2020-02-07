@@ -13,7 +13,39 @@ import Sudoko from './Sudoku.css';
                 <div className="Sudoku-Title">
                     {this.props.title}
                 </div>
-                
+                <div className="sudoku-row">
+                    <div className="sudoku-box">
+                        <Grid x={0} y={0} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={0} y={3} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={0} y={6} type={this.props.type}/>
+                    </div>
+                </div>
+                <div className="sudoku-row">
+                    <div className="sudoku-box">
+                        <Grid x={3} y={0} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={3} y={3} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={3} y={6} type={this.props.type}/>
+                    </div>
+                </div>
+                <div className="sudoku-row">
+                    <div className="sudoku-box">
+                        <Grid x={6} y={0} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={6} y={3} type={this.props.type}/>
+                    </div>
+                    <div className="sudoku-box">
+                        <Grid x={6} y={6} type={this.props.type}/>
+                    </div>
+                </div>
             </div>
          )
      }
