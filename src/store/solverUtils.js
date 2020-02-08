@@ -82,5 +82,92 @@ export function isValidValue (value) {
  * @param sudoku the puzzle to be solved
  */
 
- 
+ export function solve(sudoku) {
+     // copy input 
+     let puzzle = [
+        [...sudoku[0]],
+        [...sudoku[1]],
+        [...sudoku[2]],
+        [...sudoku[3]],
+        [...sudoku[4]],
+        [...sudoku[5]],
+        [...sudoku[6]],
+        [...sudoku[7]],
+        [...sudoku[8]],
+     ]
+
+     let cycleimprovedAnswer = true
+     let remainingCells = []
+     while (cycleimprovedAnswer) {
+         cycleimprovedAnswer = false
+         remainingCells = []
+         // do a cycle and look for cells where their is only one possible value
+         for (let x =0; y < 9; x++) {
+             for (let y = 0; y < 9; y++) {
+                 const value = puzzle[x][y]
+                 if (value) {
+                     continue // this cell is populated, skip to the next
+                 }
+
+                 //get list of values in all peers
+                 const peers = getPeers(x, y)
+                 let usedValues = []
+                 for (var peer of peers) {
+                     usedValues.push(puzzle[peer.x][peer.y])
+                 }
+
+                 //see what possible values remain
+                 const possibleValues = VALID_VALUES.filter(value => usedValues.indexOf(value) === -1)
+                 if (possibleValues.length ===1) {
+                     puzzle[x][y] = possibleValues[0]
+                     cycleimprovedAnswer = true
+                 } else if (possibleValues === 0) {
+                     alert('puzzle cannot be solved')
+                     return [
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                         ['','','','','','','','','',],
+                     ]
+                 } else {
+                     remainingCells.push({
+                         x,
+                         y,
+                         possibleValues
+                     })
+                 }
+             }
+         }
+     }
+
+     // Now use brute force to solve remaining cells
+     // Use the list of possible values from the peer evaluation to limit the search space.
+     for (let i = 0; i < remainingCells.length; i++) {
+         const {x, y, possibleValues} = remainingCells[i]
+         let value = puzzle[x][y]
+         if (!value) {
+             value = possibleValues[0]
+         } else {
+             const indexOfCurrentValue = possibleValues.indexOf(value)
+             if (indexOfCurrentValue >= possibleValues.length -1) {
+                 // we are out of values for this cell backtrack on cell
+                 puzzle[x][y] = ''
+                 i = i -2
+                 continue
+             }
+             value = possibleValues[indexOfCurrentValue + 1]
+         }
+         puzzle[x][y] = value
+         if (!isCellValid(x, y, puzzle)) {
+            i = i - 1 //this new square is not valid
+            continue
+         }
+     }
+     return puzzle
+ }
 
