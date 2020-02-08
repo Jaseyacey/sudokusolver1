@@ -1,7 +1,6 @@
 import { createStore } from 'redux';
 import { SET_VALUE, SELECT_CELL, SOLVE_PUZZLE, CLEAR_PUZZLES } from '../actions/sudokuActions';
 import  {isValidValue, isCellValid, getPeers, solve } from './solverUtils';
-import { on } from 'cluster';
 import { defaultCipherList } from 'constants';
 import { create } from 'domain';
 

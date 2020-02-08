@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import Sudoku from './components/Sudoku';
 import { solvePuzzle, clearPuzzles } from './actions/sudokuActions';
-import '.Solver.css';
+import './components/Solver.css';
 
 class Solver extends Component {
     render() {
