@@ -19,7 +19,7 @@ class Solver extends Component {
                     </div>
                 <div className="solver-button">
                     <button id="clear" onClick={() => store.dispatch(solvePuzzle())}>
-                        Clear
+                        Solve
                     </button>
                 </div>
                 </div>
